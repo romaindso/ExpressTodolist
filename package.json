@@ -10,5 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.12.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "supertest": "^0.15.0"
   }
 }
