@@ -9,6 +9,14 @@ describe('Requests to the root path', function(){
 			.end(function(error){
 				if(error) throw error;
 				done();
-			})
+			});
+	});
+});
+
+describe('Listening tasks on /tasks', function(){
+	it('Returns a 200 status code', function(done){
+		request(app)
+			.get('/tasks')
+			.expect(200, done);
 	});
 });
