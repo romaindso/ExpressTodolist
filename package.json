@@ -4,7 +4,7 @@
   "description": "A ToDo list app based on ExpressJS",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha -w app.js test.js"
   },
   "author": "Romain Durand Saint Omer",
   "license": "ISC",
