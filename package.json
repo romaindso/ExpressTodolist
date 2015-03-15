@@ -1,0 +1,14 @@
+{
+  "name": "ExpressTodolist",
+  "version": "1.0.0",
+  "description": "A ToDo list app based on ExpressJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Romain Durand Saint Omer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.2"
+  }
+}
