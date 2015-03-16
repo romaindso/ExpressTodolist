@@ -13,6 +13,12 @@ describe('Requests to the root path', function(){
 			.get('/')
 			.expect('Content-Type', /html/, done);
 	});
+
+	it('Returns an index file with Tasks', function(done){
+		request(app)
+			.get('/')
+			.expect(/tasks/i, done);
+	});
 });
 
 describe('Listening tasks on /tasks', function(){
