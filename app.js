@@ -1,9 +1,7 @@
 var express = require('express');
 var app = express();
 
-app.get('/', function(request, response){
-	response.send('Hello world !');
-});
+app.use(express.static('public'));
 
 app.get('/tasks', function(request, response){
 	var tasks = ['task1', 'task2', 'task3'];
