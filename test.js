@@ -19,4 +19,20 @@ describe('Listening tasks on /tasks', function(){
 			.get('/tasks')
 			.expect(200, done);
 	});
+
+	it('Returns JSON format', function(done){
+		request(app)
+			.get('/tasks')
+			.expect('Content-Type', /json/)
+			.end(function(error){
+				if(error) throw error;
+				done();
+			});
+	});
+
+	it('Returns initial tasks', function(done){
+		request(app)
+			.get('/tasks')
+			.expect(JSON.stringify(['task1', 'task2', 'task3']), done)
+	});
 });

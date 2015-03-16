@@ -6,7 +6,8 @@ app.get('/', function(request, response){
 });
 
 app.get('/tasks', function(request, response){
-	response.send('Ok');
+	var tasks = ['task1', 'task2', 'task3'];
+	response.json(tasks);
 });
 
 module.exports = app; 
