@@ -44,3 +44,12 @@ describe('Listening tasks on /tasks', function(){
 			.expect(JSON.stringify(['task1', 'task2', 'task3']), done);
 	});
 });
+
+describe('Creating new tasks', function(){
+	it('Returns a 201 status code', function(done){
+		request(app)
+			.post('/tasks')
+			.send('title=build+an+express+app')
+			.expect(201, done);
+	});
+});

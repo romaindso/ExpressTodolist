@@ -8,4 +8,8 @@ app.get('/tasks', function(request, response){
 	response.json(tasks);
 });
 
+app.post('/tasks', function(request, response){
+	response.sendStatus(201);
+});
+
 module.exports = app; 

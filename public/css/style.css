@@ -1,0 +1,42 @@
+body {
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+	background: url('../img/low_contrast_linen.png') repeat;
+}
+
+section {
+	margin: 150px auto 0;
+	padding: 20px;
+	width: 400px;
+	background-color: rgba(255,255,255,0.8);
+	border: 1px solid grey;
+	box-shadow: inset 0 0 4px #444444;
+}
+
+input[type=submit] {
+	border: 0 none;
+	border-radius: 2px 2px 2px 2px;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-block;
+	font-family: Arial,sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 20px;
+	margin-bottom: 0;
+	margin-top: 10px;
+	padding: 7px 10px;
+	text-transform: none;
+	transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
+	-webkit-transition: all 0.3s ease 0s;
+	width: 16.795%;
+	text-align: center;
+	background: none repeat scroll 0 0 #46b98a;
+	color: #FFF;
+}
+
+input[type=submit]:hover {
+	background: none repeat scroll 0 0 #444444;
+	color: #FFF;
+}
+
