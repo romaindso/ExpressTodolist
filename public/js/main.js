@@ -16,7 +16,6 @@ $(function() {
 			type: 'POST',
 			data: form.serialize(),
 			success: function(result){
-				form.remove();
 				appendTasksList([result]);
 			},
 			error: function(err){
