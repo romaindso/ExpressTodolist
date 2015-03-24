@@ -16,6 +16,10 @@ app.post('/tasks', function(request, response){
 	response.status(201).json(newTask);
 });
 
+app.delete('/tasks/:title', function(request, response){
+   response.sendStatus(204);
+});
+
 app.listen(3000, function(){
     console.log('Listening on port 3000');
 });

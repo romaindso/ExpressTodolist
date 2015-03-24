@@ -60,3 +60,11 @@ describe('Creating new tasks', function(){
 			.expect(/build an express app/i, done);
 	});
 });
+
+describe('Delete a task', function(){
+   it('Returns a 204 status code', function(done){
+      request(app)
+          .delete('/tasks/Cooking')
+          .expect(204, done);
+   });
+});
