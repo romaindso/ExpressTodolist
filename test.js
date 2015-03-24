@@ -49,14 +49,14 @@ describe('Creating new tasks', function(){
 	it('Returns a 201 status code', function(done){
 		request(app)
 			.post('/tasks')
-			.send('name=build+an+express+app')
+			.send('title=build+an+express+app')
 			.expect(201, done);
 	});
 
 	it('Returns the task name', function(done){
 		request(app)
 			.post('/tasks')
-			.send('name=build+an+express+app')
+			.send('title=build+an+express+app')
 			.expect(/build an express app/i, done);
 	});
 });

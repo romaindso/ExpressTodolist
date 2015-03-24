@@ -11,9 +11,13 @@ app.get('/tasks', function(request, response){
 });
 
 app.post('/tasks', function(request, response){
-	var newTask = request.body.name;
+	var newTask = request.body.title;
 	tasks.push(newTask);
 	response.status(201).json(newTask);
+});
+
+app.listen(3000, function(){
+    console.log('Listening on port 3000');
 });
 
 module.exports = app; 
