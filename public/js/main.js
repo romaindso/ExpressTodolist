@@ -30,6 +30,14 @@ $(function() {
 		if(!(confirm('Are you sure ?'))){
 			return false;
 		}
-		console.log('go delete');
+
+        var target = $(event.currentTarget);
+
+        $.ajax('/tasks/'+target.data('title'), {
+            type: 'DELETE',
+            success: function(){
+                target.parents('li').remove();
+            }
+        });
 	});
 });

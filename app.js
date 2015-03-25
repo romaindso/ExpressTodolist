@@ -17,7 +17,11 @@ app.post('/tasks', function(request, response){
 });
 
 app.delete('/tasks/:title', function(request, response){
-   response.sendStatus(204);
+    var index = tasks.indexOf(request.body.title);
+    if(index > -1){
+        tasks.splice(index);
+    }
+    response.sendStatus(204);
 });
 
 app.listen(3000, function(){
