@@ -59,6 +59,13 @@ describe('Creating new tasks', function(){
 			.send('title=build+an+express+app')
 			.expect(/build an express app/i, done);
 	});
+
+	it('Validates the task name', function(done){
+		request(app)
+			.post('/tasks')
+			.send('title=')
+			.expect(400, done);
+	});
 });
 
 describe('Delete a task', function(){

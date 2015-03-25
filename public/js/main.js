@@ -14,6 +14,7 @@ $(function() {
 	$('form').on('submit', function(event) {
 		event.preventDefault();
 		var form = $(this);
+		$('.alert').hide();
 
 		$.ajax(form.attr('action'), {
 			type: 'POST',
@@ -22,7 +23,7 @@ $(function() {
 				appendTasksList([result]);
 			},
 			error: function(err){
-				console.log(err);
+				$('.alert').show();
 			}
 		});
 	});

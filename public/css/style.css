@@ -8,3 +8,6 @@ section {
 	border: 0;
 }
 
+.alert {
+	display: none;
+}

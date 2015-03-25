@@ -12,6 +12,10 @@ app.get('/tasks', function(request, response){
 
 app.post('/tasks', function(request, response){
 	var newTask = request.body.title;
+	if(!newTask){
+		response.sendStatus(400);
+		return false;
+	}
 	tasks.push(newTask);
 	response.status(201).json(newTask);
 });
@@ -22,10 +26,6 @@ app.delete('/tasks/:title', function(request, response){
         tasks.splice(index);
     }
     response.sendStatus(204);
-});
-
-app.listen(3000, function(){
-    console.log('Listening on port 3000');
 });
 
 module.exports = app; 
