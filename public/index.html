@@ -6,7 +6,10 @@
         <title>Todo List</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link href="css/roboto.min.css" rel="stylesheet">
+        <link href="css/material.min.css" rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/style.css">
@@ -16,21 +19,40 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        
-        <section>
-            <fieldset>
-                <legend>Add task</legend>
-                <form action="/tasks" method="post" >
-                    <input type="text" name="title" placeholder="Title" /><br />
-                    <input type="submit" value="Submit" />
-                </form>
-            </fieldset>
-        
-            <h3>Todo List :</h3>
-            <ul class="tasks-list"></ul>            
-        </section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-6">
+                    <section>
+                        <fieldset>
+                            <legend>Add tasks</legend>
+                            <form action="/tasks" method="post" >
+                                <div class="form-group">
+                                    <label for="inputTitle" class="col-lg-2 control-label">Title</label>
+                                    <div class="col-lg-10">
+                                        <input class="form-control" id="inputTitle" placeholder="Add your task here" name="title" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-10 col-lg-offset-2">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </fieldset>
+                
+                        <h3>Todo List :</h3>
+                        <ul class="tasks-list"></ul>
+                    </section>           
+                </div>
+                <div class="col-xs-3"></div>
+            </div>
+        </div>
 
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.3.min.js"><\/script>')</script>
+        <script src="js/vendor/jquery-2.1.3.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="js/ripples.min.js"></script>
+        <script src="js/material.min.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
     </body>

@@ -1,11 +1,12 @@
 $(function() {
+	$.material.init();
 
 	$.get('/tasks', appendTasksList);
 
 	function appendTasksList(tasks){
 		for(var i=0; i<tasks.length;i++){
 			$('.tasks-list').append(
-				'<li>'+tasks[i]+' <a href="#" data-title="'+tasks[i]+'"><i class="fa fa-trash-o"></i></a></li>'
+				'<li>'+tasks[i]+' <a href="#" data-title="'+tasks[i]+'"><i class="mdi-action-delete"></i></a></li>'
 			);
 		}		
 	}
