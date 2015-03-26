@@ -1,0 +1,15 @@
+{
+  "eqeqeq":    true,
+  "curly":     true,
+  "node":      true,
+  "strict":    false,
+  "newcap":    false,
+  "undef":     true,
+  "unused":    true,
+  "onecase":   true,
+  "lastsemic": true,
+  "globals": {
+    "$": false,
+    "jQuery": false
+  }
+}
