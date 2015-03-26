@@ -5,7 +5,7 @@ var express = require('express'),
 
 var tasks = ['task1', 'task2', 'task3'];
 
-router.route('/tasks')
+router.route('/')
     .get(function(request, response){
         response.json(tasks);
     })
@@ -19,7 +19,7 @@ router.route('/tasks')
         response.status(201).json(newTask);
     });
 
-router.route('/tasks/:title')
+router.route('/:title')
     .delete(urlencode, function(request, response){
         var index = tasks.indexOf(request.body.title);
         if(index > -1){
