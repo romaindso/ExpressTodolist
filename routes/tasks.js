@@ -16,7 +16,7 @@ router.route('/')
     })
     .post(urlencode, function(request, response){
         var newTask = request.body;
-        if(!newTask.title){
+        if(!newTask.title || !newTask.description){
             response.sendStatus(400);
             return false;
         }
