@@ -4,12 +4,14 @@
   "description": "A ToDo list app based on ExpressJS",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w app.js test.js",
+    "test": "NODE_ENV=test mocha -w app.js test.js",
     "start": "node bin/www"
   },
   "author": "Romain Durand Saint Omer <romain.dso@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "hiredis": "^0.1.17",
+    "redis": "^0.12.1",
     "body-parser": "^1.12.2",
     "express": "^4.12.2"
   },
