@@ -10,6 +10,13 @@
   "lastsemic": true,
   "globals": {
     "$": false,
-    "jQuery": false
+    "jQuery": false,
+    /* MOCHA */
+    "describe"   : false,
+    "it"         : false,
+    "before"     : false,
+    "beforeEach" : false,
+    "after"      : false,
+    "afterEach"  : false
   }
 }
