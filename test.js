@@ -36,11 +36,7 @@ describe('Listening tasks on /tasks', function(){
 	it('Returns JSON format', function(done){
 		request(app)
 			.get('/tasks')
-			.expect('Content-Type', /json/)
-			.end(function(error){
-				if(error) throw error;
-				done();
-			});
+			.expect('Content-Type', /json/, done);
 	});
 
 	it('Returns initial tasks', function(done){
@@ -87,5 +83,34 @@ describe('Delete a task', function(){
 		request(app)
 			.delete('/tasks/Cooking')
 			.expect(204, done);
+	});
+});
+
+describe('Shows tasks description', function(){
+	
+	before(function(){
+		client.hset('tasks', 'Cooking', 'Learn to make cookies');
+	});
+
+	after(function(){
+		client.flushdb();
+	});
+
+	it('Returns 200 status code', function(done){
+		request(app)
+			.get('/tasks/Cooking')
+			.expect(200, done);
+	});
+
+	it('Returns a HTML format', function(done){
+		request(app)
+			.get('/')
+			.expect('Content-Type', /html/, done);
+	});
+
+	it('Returns description for given task', function(done){
+		request(app)
+			.get('/tasks/Cooking')
+			.expect(/cookies/, done);
 	});
 });

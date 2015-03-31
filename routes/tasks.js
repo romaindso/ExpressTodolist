@@ -27,11 +27,23 @@ router.route('/')
     });
 
 router.route('/:title')
-    .delete(urlencode, function(request, response){
-        client.hdel('tasks', request.body.title, function(error){
+    .get(function(request, response){
+        client.hget('tasks', request.params.title, function(error, description){
+            response.render('show.ejs', 
+                { 
+                    task: {
+                        title: request.params.title,
+                        description: description
+                    }
+                } 
+            );
+        });
+    })
+    .delete(function(request, response){
+        client.hdel('tasks', request.params.title, function(error){
             if(error) throw error;
             response.sendStatus(204);
         });
-});
+    });
 
 module.exports = router;
