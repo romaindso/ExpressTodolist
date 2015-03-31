@@ -74,9 +74,18 @@ describe('Creating new tasks', function(){
 });
 
 describe('Delete a task', function(){
-   it('Returns a 204 status code', function(done){
-      request(app)
-          .delete('/tasks/Cooking')
-          .expect(204, done);
-   });
+
+	before(function(){
+		client.hset('tasks', 'Cooking', 'Learn to make cookies');
+	});
+
+	after(function(){
+		client.flushdb();
+	});
+
+	it('Returns a 204 status code', function(done){
+		request(app)
+			.delete('/tasks/Cooking')
+			.expect(204, done);
+	});
 });
