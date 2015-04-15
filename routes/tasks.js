@@ -2,16 +2,16 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     urlencode = bodyParser.urlencoded({ extended: false }),
     router = express.Router(),
-    redis = require('redis'),
-    client = redis.createClient();
-
-client.select((process.env.NODE_ENV || 'development').length);
+    mongoose = require('mongoose'),
+    Task = require('../models/task.js');
 
 router.route('/')
     .get(function(request, response){
-        client.hkeys('tasks', function(error, replies){
-            if(error) throw error;
-            response.json(replies);  
+        Task.find(function(err, tasks){
+            if(err){
+               response.send(err);
+            }
+            response.json({tasks: tasks});
         });
     })
     .post(urlencode, function(request, response){
@@ -20,28 +20,38 @@ router.route('/')
             response.sendStatus(400);
             return false;
         }
-        client.hset('tasks', newTask.title, newTask.description, function(error) {
-            if(error) throw error;
-            response.status(201).json(newTask.title);
+        var task = new Task(newTask);
+        task.save(function(err){
+            if(err){
+                response.send(err);
+            }
+            response.status(201).json(task.title);
         });
     });
 
 router.route('/:title')
     .get(function(request, response){
-        client.hget('tasks', request.params.title, function(error, description){
-            response.render('show.ejs', 
-                { 
+        var query = Task.where({title: request.params.title});
+        query.findOne(function(err, task){
+            if(err){
+                response.send(err);
+            }
+            response.render('show.ejs',
+                {
                     task: {
-                        title: request.params.title,
-                        description: description
+                        title: task.title,
+                        description: task.description
                     }
-                } 
+                }
             );
         });
     })
     .delete(function(request, response){
-        client.hdel('tasks', request.params.title, function(error){
-            if(error) throw error;
+        var query = Task.where({title: request.params.title});
+        query.findOneAndRemove(function(err){
+            if(err){
+                response.send(err);
+            }
             response.sendStatus(204);
         });
     });

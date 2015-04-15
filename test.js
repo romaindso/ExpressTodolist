@@ -1,116 +1,173 @@
 var request = require('supertest');
 var app = require('./app');
+var mongoose = require('mongoose');
+//var Task = require('models/task');
 
-var redis = require('redis');
-var client = redis.createClient();
-client.select('test'.length);
-client.flushdb();
+//var redis = require('redis');
+//var client = redis.createClient();
+//client.select('test'.length);
+//client.flushdb();
 
-describe('Requests to the root path', function(){
-	it('Returns a 200 status code', function(done){
-		request(app)
-			.get('/')
-			.expect(200, done);
-	});
+process.env.NODE_ENV = 'test';
 
-	it('Returns a HTML format', function(done){
-		request(app)
-			.get('/')
-			.expect('Content-Type', /html/, done);
-	});
-
-	it('Returns an index file with Tasks', function(done){
-		request(app)
-			.get('/')
-			.expect(/tasks/i, done);
-	});
+mongoose.connection.on('error', function(err){
+    console.log(err);
 });
 
-describe('Listening tasks on /tasks', function(){
-	it('Returns a 200 status code', function(done){
-		request(app)
-			.get('/tasks')
-			.expect(200, done);
-	});
+beforeEach(function (done) {
 
-	it('Returns JSON format', function(done){
-		request(app)
-			.get('/tasks')
-			.expect('Content-Type', /json/, done);
-	});
+    function clearDB() {
+        for (var i in mongoose.connection.collections) {
+            mongoose.connection.collections[i].remove();
+        }
+        return done();
+    }
 
-	it('Returns initial tasks', function(done){
-		request(app)
-			.get('/tasks')
-			.expect(JSON.stringify([]), done);
-	});
+    function reconnect() {
+        mongoose.connect('mongodb://localhost/todolist', function (err) {
+            if (err) {
+                throw err;
+            }
+            return clearDB();
+        });
+    }
+
+    function checkState() {
+        switch (mongoose.connection.readyState) {
+            case 0:
+                reconnect();
+                break;
+            case 1:
+                clearDB();
+                break;
+            default:
+                process.nextTick(checkState);
+        }
+    }
+
+    checkState();
 });
 
-describe('Creating new tasks', function(){
-	it('Returns a 201 status code', function(done){
-		request(app)
-			.post('/tasks')
-			.send('title=build+an++app&description=based+on+express')
-			.expect(201, done);
-	});
-
-	it('Returns the task name', function(done){
-		request(app)
-			.post('/tasks')
-			.send('title=build+an+app&description=based+on+express')
-			.expect(/build an app/i, done);
-	});
-
-	it('Validates the task name', function(done){
-		request(app)
-			.post('/tasks')
-			.send('title=')
-			.expect(400, done);
-	});
+afterEach(function (done) {
+    mongoose.disconnect();
+    return done();
 });
 
-describe('Delete a task', function(){
 
-	before(function(){
-		client.hset('tasks', 'Cooking', 'Learn to make cookies');
-	});
+describe('Requests to the root path', function () {
+    it('Returns a 200 status code', function (done) {
+        request(app)
+            .get('/')
+            .expect(200, done);
+    });
 
-	after(function(){
-		client.flushdb();
-	});
+    it('Returns a HTML format', function (done) {
+        request(app)
+            .get('/')
+            .expect('Content-Type', /html/, done);
+    });
 
-	it('Returns a 204 status code', function(done){
-		request(app)
-			.delete('/tasks/Cooking')
-			.expect(204, done);
-	});
+    it('Returns an index file with Tasks', function (done) {
+        request(app)
+            .get('/')
+            .expect(/tasks/i, done);
+    });
 });
 
-describe('Shows tasks description', function(){
-	
-	before(function(){
-		client.hset('tasks', 'Cooking', 'Learn to make cookies');
-	});
+describe('Listening tasks on /tasks', function () {
+    it('Returns a 200 status code', function (done) {
+        request(app)
+            .get('/tasks')
+            .expect(200, done);
+    });
 
-	after(function(){
-		client.flushdb();
-	});
+    it('Returns JSON format', function (done) {
+        request(app)
+            .get('/tasks')
+            .expect('Content-Type', /json/, done);
+    });
 
-	it('Returns 200 status code', function(done){
-		request(app)
-			.get('/tasks/Cooking')
-			.expect(200, done);
-	});
+    it('Returns initial tasks', function (done) {
+        request(app)
+            .get('/tasks')
+            .expect({"tasks": []}, done);
+    });
+});
 
-	it('Returns a HTML format', function(done){
-		request(app)
-			.get('/')
-			.expect('Content-Type', /html/, done);
-	});
+describe('Creating new tasks', function () {
+    it('Returns a 201 status code', function (done) {
+        request(app)
+            .post('/tasks')
+            .send('title=build+an++app&description=based+on+express')
+            .expect(201, done);
+    });
 
-	it('Returns description for given task', function(done){
-		request(app)
-			.get('/tasks/Cooking')
-			.expect(/cookies/, done);
-	});
+    it('Returns the task name', function (done) {
+        request(app)
+            .post('/tasks')
+            .send('title=build+an+app&description=based+on+express')
+            .expect(/build an app/i, done);
+    });
+
+    it('Validates the task name', function (done) {
+        request(app)
+            .post('/tasks')
+            .send('title=')
+            .expect(400, done);
+    });
+});
+
+describe('Delete a task', function () {
+
+    //before(function(){
+    //	client.hset('tasks', 'Cooking', 'Learn to make cookies');
+    //});
+    //
+    //after(function(){
+    //	client.flushdb();
+    //});
+
+    it('Returns a 204 status code', function (done) {
+        request(app)
+            .delete('/tasks/Cooking')
+            .expect(204, done);
+    });
+});
+
+describe('Shows tasks description', function () {
+
+
+    //before(function () {
+    //    var task = new Task({title: 'Cooking', description: 'Learn to make cookies'});
+    //    task.save(function (err) {
+    //        if (err) {
+    //            response.send(err);
+    //        }
+    //    });
+    //    //client.hset('tasks', 'Cooking', 'Learn to make cookies');
+    //});
+    //before(function () {
+    //  client.hset('tasks', 'Cooking', 'Learn to make cookies');
+    //}):
+    //after(function(){
+    //	client.flushdb();
+    //});
+
+    it('Returns 200 status code', function (done) {
+        request(app)
+            .get('/tasks/Cooking')
+            .expect(200, done);
+    });
+
+    it('Returns a HTML format', function (done) {
+        request(app)
+            .get('/')
+            .expect('Content-Type', /html/, done);
+    });
+
+    it('Returns description for given task', function (done) {
+        request(app)
+            .get('/tasks/Cooking')
+            .expect(/cookies/, done);
+    });
 });
