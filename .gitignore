@@ -116,3 +116,4 @@ crashlytics-build.properties
 ### Redis ###
 # Ignore redis binary dump (dump.rdb) files
 *.rdb
+npm-debug.log
