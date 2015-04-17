@@ -1,12 +1,7 @@
 var request = require('supertest');
 var app = require('./app');
 var mongoose = require('mongoose');
-//var Task = require('models/task');
-
-//var redis = require('redis');
-//var client = redis.createClient();
-//client.select('test'.length);
-//client.flushdb();
+var Task = require('./models/task');
 
 process.env.NODE_ENV = 'test';
 
@@ -49,6 +44,8 @@ beforeEach(function (done) {
 });
 
 afterEach(function (done) {
+    mongoose.models = {};
+    mongoose.modelSchemas = {};
     mongoose.disconnect();
     return done();
 });
@@ -119,14 +116,6 @@ describe('Creating new tasks', function () {
 
 describe('Delete a task', function () {
 
-    //before(function(){
-    //	client.hset('tasks', 'Cooking', 'Learn to make cookies');
-    //});
-    //
-    //after(function(){
-    //	client.flushdb();
-    //});
-
     it('Returns a 204 status code', function (done) {
         request(app)
             .delete('/tasks/Cooking')
@@ -136,24 +125,33 @@ describe('Delete a task', function () {
 
 describe('Shows tasks description', function () {
 
+    beforeEach(function (done) {
+        var task = new Task({title: 'Cooking', description: 'Learn to make cookies'});
+        task.save(function (err) {
+            if (err) {
+                throw err;
+            }
+            done();
+        });
+    });
 
-    //before(function () {
-    //    var task = new Task({title: 'Cooking', description: 'Learn to make cookies'});
-    //    task.save(function (err) {
-    //        if (err) {
-    //            response.send(err);
-    //        }
-    //    });
-    //    //client.hset('tasks', 'Cooking', 'Learn to make cookies');
-    //});
-    //before(function () {
-    //  client.hset('tasks', 'Cooking', 'Learn to make cookies');
-    //}):
-    //after(function(){
-    //	client.flushdb();
-    //});
+    afterEach(function(done){
+        var query = Task.where({title: 'Cooking'});
+        query.findOneAndRemove(function(err){
+            if(err){
+                throw err;
+            }
+            done();
+        });
+    });
 
     it('Returns 200 status code', function (done) {
+        var task = new Task({title: 'Cooking', description: 'Learn to make cookies'});
+        task.save(function (err) {
+            if (err) {
+                throw err;
+            }
+        });
         request(app)
             .get('/tasks/Cooking')
             .expect(200, done);
