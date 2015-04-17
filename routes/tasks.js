@@ -2,8 +2,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     urlencode = bodyParser.urlencoded({ extended: false }),
     router = express.Router(),
-    mongoose = require('mongoose'),
-    Task = require('../models/task.js');
+    Task = require('../models/task');
 
 router.route('/')
     .get(function(request, response){
@@ -31,8 +30,7 @@ router.route('/')
 
 router.route('/:title')
     .get(function(request, response){
-        var query = Task.where({title: request.params.title});
-        query.findOne(function(err, task){
+        Task.where('title', request.params.title).findOne(function(err, task){
             if(err){
                 response.send(err);
             }
@@ -47,8 +45,7 @@ router.route('/:title')
         });
     })
     .delete(function(request, response){
-        var query = Task.where({title: request.params.title});
-        query.findOneAndRemove(function(err){
+        Task.where('title', request.params.title).findOneAndRemove(function(err){
             if(err){
                 response.send(err);
             }
