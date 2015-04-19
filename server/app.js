@@ -4,6 +4,7 @@ var app = express();
 
 mongoose.connect('mongodb://localhost/todolist');
 
+app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
 app.use('/tasks', require('./routes/tasks'));
 
