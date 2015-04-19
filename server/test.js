@@ -19,7 +19,7 @@ beforeEach(function (done) {
     }
 
     function reconnect() {
-        mongoose.connect('mongodb://localhost/todolist', function (err) {
+        mongoose.connect('mongodb://localhost/todolist-test', function (err) {
             if (err) {
                 throw err;
             }
