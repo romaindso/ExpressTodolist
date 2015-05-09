@@ -87,7 +87,7 @@ describe('Listening tasks on /tasks', function () {
     it('Returns initial tasks', function (done) {
         request(app)
             .get('/tasks')
-            .expect({"tasks": []}, done);
+            .expect([], done);
     });
 });
 
@@ -99,7 +99,7 @@ describe('Creating new tasks', function () {
             .expect(201, done);
     });
 
-    it('Returns the task name', function (done) {
+    it('Returns the task', function (done) {
         request(app)
             .post('/tasks')
             .send('title=build+an+app&description=based+on+express')

@@ -6,7 +6,7 @@ exports.list = function(request, response){
         if(err){
            response.send(err);
         }
-        response.json({tasks: tasks});
+        response.json(tasks);
     });
 };
 
@@ -21,7 +21,7 @@ exports.addTask = function(request, response){
         if(err){
             response.send(err);
         }
-        response.status(201).json(task.title);
+        response.status(201).json(task);
     });
 };
 

@@ -4,18 +4,20 @@ $(function() {
 	$.get('/tasks', appendTasksList);
 
 	function appendTasksList(tasks){
-		var list = [];
-		var content, task;
-		for(var i in tasks){
-			task = tasks[i];
-			content = 
-				'<a href="/tasks/'+task+'">'+task+'</a>'+
-				'<a href="#" data-title="'+task+'">'+
-					'<i class="mdi-action-delete"></i>'+
-				'</a>';
-			list.push($('<li>', { html: content }));	
+		if(tasks.length > 0){
+			var list = [];
+			var content, task;
+			for(var i = 0; i < tasks.length; i++){
+				var titleTask = tasks[i].title;
+				content = 
+					'<a href="/tasks/'+titleTask+'">'+titleTask+'</a>'+
+					'<a href="#" data-title="'+titleTask+'">'+
+						'<i class="mdi-action-delete"></i>'+
+					'</a>';
+				list.push($('<li>', { html: content }));	
+			}
+			$('.tasks-list').append(list);
 		}
-		$('.tasks-list').append(list);
 	}
 
 	$('form').on('submit', function(event) {
