@@ -2,6 +2,7 @@ var request = require('supertest');
 var app = require('./app');
 var mongoose = require('mongoose');
 var Task = require('./models/task');
+var config = require('./config');
 
 process.env.NODE_ENV = 'test';
 
@@ -19,7 +20,7 @@ beforeEach(function (done) {
     }
 
     function reconnect() {
-        mongoose.connect('mongodb://localhost/todolist-test', function (err) {
+        mongoose.connect(config.db.test, function (err) {
             if (err) {
                 throw err;
             }
